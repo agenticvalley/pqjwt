@@ -1,0 +1,88 @@
+{
+  "name": "@agenticvalley/pqjwt",
+  "version": "0.1.0",
+  "description": "Post-quantum JSON Web Tokens (JWT/JWS) signed with NIST ML-DSA (FIPS-204) per RFC 9964. No classical crypto, no hybrids — a pure post-quantum drop-in for the JWT you already know.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist coverage",
+    "build": "npm run clean && tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "check": "npm run typecheck && npm run lint && npm run format:check && npm run test",
+    "example:keys": "tsx examples/01-generate-keys.ts",
+    "example:sign": "tsx examples/02-sign-and-verify.ts",
+    "example:decode": "tsx examples/03-decode-and-inspect.ts",
+    "prepublishOnly": "npm run check && npm run build"
+  },
+  "keywords": [
+    "jwt",
+    "jws",
+    "jose",
+    "jwk",
+    "post-quantum",
+    "quantum-resistant",
+    "pqc",
+    "ml-dsa",
+    "dilithium",
+    "fips-204",
+    "rfc9964",
+    "akp",
+    "token",
+    "authentication",
+    "signature"
+  ],
+  "author": "AgenticValley",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/agenticvalley/pqjwt.git"
+  },
+  "homepage": "https://github.com/agenticvalley/pqjwt#readme",
+  "bugs": {
+    "url": "https://github.com/agenticvalley/pqjwt/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@noble/hashes": "^1.8.0",
+    "@noble/post-quantum": "^0.4.1",
+    "@scure/base": "^1.2.6"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@types/node": "^22.10.0",
+    "@vitest/coverage-v8": "^2.1.8",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.4.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.0",
+    "vitest": "^2.1.8"
+  }
+}

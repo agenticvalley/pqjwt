@@ -1,0 +1,19 @@
+# Source & tooling — only the built `dist/` ships (see package.json "files").
+src/
+test/
+examples/
+coverage/
+
+# Configs
+tsconfig*.json
+eslint.config.js
+vitest.config.ts
+.prettierrc.json
+.prettierignore
+.editorconfig
+.nvmrc
+
+# CI / misc
+.github/
+*.tsbuildinfo
+.DS_Store
