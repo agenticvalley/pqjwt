@@ -4,6 +4,16 @@ All notable changes to `@agenticvalley/pqjwt` are documented in this file. The
 format follows the Keep a Changelog convention, and this project adheres to
 Semantic Versioning.
 
+## [0.1.1] - 2026-10-26
+
+### Added
+
+- The default (namespace) export now also carries `ErrorCode`, every error class
+  (`PqJwtError`, `TokenExpiredError`, …), `SignatureAlgorithm`, the algorithm
+  constants and registry helpers, the low-level signing/encoding helpers, and
+  `parseToken`. So `pqjwt.ErrorCode.TOKEN_EXPIRED`, `pqjwt.SignatureAlgorithm`,
+  and friends now work without any named imports.
+
 ## [0.1.0] - 2026-09-27
 
 ### Added

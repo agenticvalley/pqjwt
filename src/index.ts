@@ -76,9 +76,30 @@
  * ```
  */
 
-import { generateSeed } from './crypto/mldsa.js';
-import { decodeJwt, decodeProtectedHeader } from './decode.js';
 import {
+  DEFAULT_SIGNATURE_ALGORITHM,
+  SIGNATURE_ALGORITHMS,
+  SUPPORTED_ALGORITHMS,
+  SignatureAlgorithm,
+  getSignatureAlgorithmInfo,
+  isSignatureAlgorithm,
+} from './crypto/algorithms.js';
+import { derivePublicKey, generateSeed, signWithSeed, verifySignature } from './crypto/mldsa.js';
+import { decodeJwt, decodeProtectedHeader, parseToken } from './decode.js';
+import {
+  ClaimValidationError,
+  ErrorCode,
+  InvalidArgumentError,
+  InvalidKeyError,
+  PqJwtError,
+  SignatureVerificationError,
+  TokenExpiredError,
+  TokenMalformedError,
+  TokenNotBeforeError,
+  UnsupportedAlgorithmError,
+} from './errors.js';
+import {
+  AKP_KEY_TYPE,
   assertPrivateJwk,
   assertPublicJwk,
   generateKeyPair,
@@ -89,6 +110,7 @@ import {
 } from './jwk.js';
 import { decode, sign, verify } from './jwt.js';
 import { signJwt } from './sign.js';
+import { base64UrlDecode, base64UrlEncode } from './utils/base64url.js';
 import { verifyJwt } from './verify.js';
 
 // --- Core API ---------------------------------------------------------------
@@ -155,9 +177,11 @@ export type { Clock } from './utils/time.js';
 /**
  * Everything bundled as one object, so you can `import pqjwt from
  * '@agenticvalley/pqjwt'` and call `pqjwt.sign(...)`, `pqjwt.verify(...)`,
- * `pqjwt.generateKeyPair(...)`, and so on — no named imports required.
+ * `pqjwt.generateKeyPair(...)`, `pqjwt.ErrorCode.TOKEN_EXPIRED`, and so on — no
+ * named imports required.
  */
 const pqjwt = {
+  // Tokens
   sign,
   verify,
   decode,
@@ -165,14 +189,41 @@ const pqjwt = {
   verifyJwt,
   decodeJwt,
   decodeProtectedHeader,
+  parseToken,
+  // Keys
   generateKeyPair,
   generateSeed,
+  derivePublicKey,
   jwkThumbprint,
   toPublicJwk,
   assertPublicJwk,
   assertPrivateJwk,
   publicKeyBytes,
   seedBytes,
+  // Low-level signing
+  signWithSeed,
+  verifySignature,
+  // Algorithms & encoding
+  SignatureAlgorithm,
+  DEFAULT_SIGNATURE_ALGORITHM,
+  SUPPORTED_ALGORITHMS,
+  SIGNATURE_ALGORITHMS,
+  getSignatureAlgorithmInfo,
+  isSignatureAlgorithm,
+  AKP_KEY_TYPE,
+  base64UrlEncode,
+  base64UrlDecode,
+  // Errors (enum + classes)
+  ErrorCode,
+  PqJwtError,
+  InvalidArgumentError,
+  UnsupportedAlgorithmError,
+  InvalidKeyError,
+  TokenMalformedError,
+  SignatureVerificationError,
+  ClaimValidationError,
+  TokenExpiredError,
+  TokenNotBeforeError,
 };
 
 export default pqjwt;

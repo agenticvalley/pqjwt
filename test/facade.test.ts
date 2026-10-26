@@ -90,3 +90,22 @@ describe('decode — jsonwebtoken shape', () => {
     expect(decode('not-a-token')).toBeNull();
   });
 });
+
+describe('default export completeness', () => {
+  it('exposes ErrorCode, error classes, and SignatureAlgorithm on the namespace', () => {
+    expect(pqjwt.ErrorCode.TOKEN_EXPIRED).toBeDefined();
+    expect(typeof pqjwt.TokenExpiredError).toBe('function');
+    expect(pqjwt.SignatureAlgorithm.ML_DSA_65).toBe('ML-DSA-65');
+    expect(pqjwt.DEFAULT_SIGNATURE_ALGORITHM).toBe('ML-DSA-65');
+  });
+
+  it('private JWK is the public JWK plus the secret priv seed', () => {
+    const { privateKey, publicKey } = pqjwt.generateKeyPair();
+    // Identical public material on both...
+    expect(privateKey.pub).toBe(publicKey.pub);
+    expect(privateKey.kid).toBe(publicKey.kid);
+    // ...the only difference is the secret seed, present solely on the private key.
+    expect('priv' in publicKey).toBe(false);
+    expect(typeof privateKey.priv).toBe('string');
+  });
+});

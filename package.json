@@ -1,7 +1,7 @@
 {
   "name": "@agenticvalley/pqjwt",
-  "version": "0.1.0",
-  "description": "Post-quantum JSON Web Tokens (JWT/JWS) signed with NIST ML-DSA (FIPS-204) per RFC 9964. No classical crypto, no hybrids — a pure post-quantum drop-in for the JWT you already know.",
+  "version": "0.1.1",
+  "description": "Post-quantum signed JSON Web Tokens (JWT/JWS) with NIST ML-DSA (FIPS-204). No classical crypto, no hybrids — a pure post-quantum drop-in for the JWT you already know.",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -69,6 +69,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@agenticvalley/pqjwt": "^0.1.0",
     "@noble/hashes": "^1.8.0",
     "@noble/post-quantum": "^0.4.1",
     "@scure/base": "^1.2.6"
